@@ -5,6 +5,7 @@ import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import MultiSelect from "primevue/multiselect";
 import Button from "primevue/button";
+import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 
 defineProps({
   canLogin: {
@@ -41,6 +42,7 @@ const countries = ref([
 <template>
   <Head title="Welcome" />
   <header class="mx-auto py-10 max-w-7xl">
+    <ThemeSwitcher />
     <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
       <Link
         v-if="$page.props.auth.user"
@@ -89,7 +91,7 @@ const countries = ref([
           <div class="flex items-center">
             <img
               :alt="slotProps.option.name"
-              src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
+              src="/storage/flag_placeholder.png"
               :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`"
               style="width: 18px"
             />
