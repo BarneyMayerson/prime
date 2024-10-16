@@ -6,6 +6,7 @@ import InputText from "primevue/inputtext";
 import MultiSelect from "primevue/multiselect";
 import Button from "primevue/button";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
+import ColorSchemeSwitcher from "@/Components/ColorSchemeSwitcher.vue";
 
 defineProps({
   canLogin: {
@@ -44,6 +45,7 @@ const countries = ref([
   <header class="mx-auto py-10 max-w-7xl">
     <nav class="flex flex-1 justify-end items-center space-x-2">
       <ThemeSwitcher />
+      <ColorSchemeSwitcher />
       <template v-if="canLogin">
         <Link
           v-if="$page.props.auth.user"
