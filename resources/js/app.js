@@ -24,7 +24,7 @@ createInertiaApp({
     return createApp({ render: () => h(App, props) })
       .use(PrimeVue, {
         theme: {
-          preset: Noir,
+          preset: Aura,
           options: {
             darkModeSelector: ".p-dark",
           },

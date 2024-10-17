@@ -74,12 +74,12 @@ const countries = ref([
   </header>
 
   <main class="mt-6 mx-auto max-w-7xl">
-    <FloatLabel>
-      <InputText id="username" v-model="value" />
-      <label for="username">Username</label>
-    </FloatLabel>
-
-    <div class="card flex justify-center">
+    <div class="card flex space-x-2 justify-center">
+      <Button label="Primary" />
+      <FloatLabel>
+        <InputText id="username" v-model="value" />
+        <label for="username">Username</label>
+      </FloatLabel>
       <MultiSelect
         v-model="selectedCountries"
         :options="countries"
