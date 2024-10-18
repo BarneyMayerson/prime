@@ -77,7 +77,7 @@ const countries = ref([
     <div class="card flex space-x-2 justify-center">
       <Button label="Primary" />
       <FloatLabel>
-        <InputText id="username" v-model="value" />
+        <InputText id="username" />
         <label for="username">Username</label>
       </FloatLabel>
       <MultiSelect

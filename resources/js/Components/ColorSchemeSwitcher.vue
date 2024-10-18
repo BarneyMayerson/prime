@@ -1,19 +1,24 @@
 <script setup>
 import { ref, watch } from "vue";
-import { $t, updatePreset, updateSurfacePalette } from "@primevue/themes";
+import { usePrimeVue } from "primevue/config";
+import { updatePreset, updateSurfacePalette } from "@primevue/themes";
 import Button from "primevue/button";
 import Popover from "primevue/popover";
 import SelectButton from "primevue/selectbutton";
+import ToggleSwitch from "primevue/toggleswitch";
 import Aura from "@primevue/themes/aura";
 import Material from "@primevue/themes/material";
 import Lara from "@primevue/themes/lara";
 import Nora from "@primevue/themes/nora";
 
-const op = ref();
+const settingsMenu = ref();
+
+const PrimeVue = usePrimeVue();
 
 const selectedPrimaryColor = ref("emerald");
 const selectedSurfaceColor = ref("slate");
-const theme = defineModel({ default: "Aura" });
+const theme = defineModel("theme", { default: "Aura" });
+const ripple = defineModel("ripple", { default: false });
 
 const primaryColors = ref([
   {
@@ -416,7 +421,7 @@ const presetNames = { Aura, Material, Lara, Nora };
 const presets = ref(Object.keys(presetNames));
 
 const toggle = (event) => {
-  op.value.toggle(event);
+  settingsMenu.value.toggle(event);
 };
 
 const updateColors = (type, color) => {
@@ -529,6 +534,10 @@ watch(theme, (themeValue) => {
   updatePreset(getPresetExt());
   updateSurfacePalette(surfacePalette);
 });
+
+watch(ripple, (rippleValue) => {
+  PrimeVue.config.ripple = rippleValue;
+});
 </script>
 <template>
   <Button
@@ -540,7 +549,7 @@ watch(theme, (themeValue) => {
     severity="secondary"
     @click="toggle"
   />
-  <Popover ref="op">
+  <Popover ref="settingsMenu">
     <div class="w-[19rem] flex flex-col gap-2">
       <span class="font-medium block text-sm">Primary colors</span>
       <div
@@ -589,6 +598,9 @@ watch(theme, (themeValue) => {
           :unselectable="false"
         />
       </div>
+
+      <span class="font-medium block text-sm">Ripple Effect</span>
+      <ToggleSwitch v-model="ripple" />
     </div>
   </Popover>
 </template>
