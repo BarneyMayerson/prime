@@ -1,14 +1,19 @@
 <script setup>
-import { ref } from "vue";
-import { updatePreset, updateSurfacePalette } from "@primevue/themes";
+import { ref, watch } from "vue";
+import { $t, updatePreset, updateSurfacePalette } from "@primevue/themes";
 import Button from "primevue/button";
 import Popover from "primevue/popover";
+import SelectButton from "primevue/selectbutton";
+import Aura from "@primevue/themes/aura";
+import Material from "@primevue/themes/material";
+import Lara from "@primevue/themes/lara";
+import Nora from "@primevue/themes/nora";
 
 const op = ref();
 
 const selectedPrimaryColor = ref("emerald");
 const selectedSurfaceColor = ref("slate");
-const theme = ref("Aura");
+const theme = defineModel({ default: "Aura" });
 
 const primaryColors = ref([
   {
@@ -407,6 +412,9 @@ const surfaces = ref([
   },
 ]);
 
+const presetNames = { Aura, Material, Lara, Nora };
+const presets = ref(Object.keys(presetNames));
+
 const toggle = (event) => {
   op.value.toggle(event);
 };
@@ -509,6 +517,18 @@ const getPresetExt = () => {
     };
   }
 };
+
+watch(theme, (themeValue) => {
+  const preset = presetNames[themeValue];
+
+  const surfacePalette = surfaces.value.find(
+    (s) => s.name === selectedSurfaceColor.value,
+  )?.palette;
+
+  updatePreset(preset);
+  updatePreset(getPresetExt());
+  updateSurfacePalette(surfacePalette);
+});
 </script>
 <template>
   <Button
@@ -521,7 +541,7 @@ const getPresetExt = () => {
     @click="toggle"
   />
   <Popover ref="op">
-    <div class="w-56 flex flex-col gap-2">
+    <div class="w-[19rem] flex flex-col gap-2">
       <span class="font-medium block text-sm">Primary colors</span>
       <div
         class="self-stretch justify-start items-start gap-2 inline-flex flex-wrap"
@@ -555,6 +575,18 @@ const getPresetExt = () => {
             outlineColor: `${selectedSurfaceColor === surface.name ? 'var(--p-surface-500)' : ''}`,
           }"
           @click="updateColors('surface', surface)"
+        />
+      </div>
+
+      <span class="font-medium block text-sm">Preset</span>
+      <div
+        class="inline-flex p-[0.28rem] items-start gap-[0.28rem] rounded-[0.71rem] border border-[#00000003] w-full"
+      >
+        <SelectButton
+          v-model="theme"
+          :allow-empty="false"
+          :options="presets"
+          :unselectable="false"
         />
       </div>
     </div>
