@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { usePrimeVue } from "primevue/config";
 import { updatePreset, updateSurfacePalette } from "@primevue/themes";
 import Button from "primevue/button";
@@ -17,8 +17,8 @@ const PrimeVue = usePrimeVue();
 
 const selectedPrimaryColor = ref("emerald");
 const selectedSurfaceColor = ref("slate");
-const theme = defineModel("theme", { default: "Aura" });
-const ripple = defineModel("ripple", { default: false });
+const theme = defineModel("theme");
+const ripple = defineModel("ripple");
 
 const primaryColors = ref([
   {
@@ -427,8 +427,10 @@ const toggle = (event) => {
 const updateColors = (type, color) => {
   if (type === "primary") {
     selectedPrimaryColor.value = color.name;
+    localStorage.primaryColor = color.name;
   } else if (type === "surface") {
     selectedSurfaceColor.value = color.name;
+    localStorage.surface = color.name;
   }
 
   applyTheme(type, color);
@@ -533,10 +535,39 @@ watch(theme, (themeValue) => {
   updatePreset(preset);
   updatePreset(getPresetExt());
   updateSurfacePalette(surfacePalette);
+
+  localStorage.presetName = themeValue;
 });
 
 watch(ripple, (rippleValue) => {
   PrimeVue.config.ripple = rippleValue;
+
+  localStorage.ripple = rippleValue ? "on" : "off";
+});
+
+onMounted(() => {
+  const primaryColorNames = primaryColors.value.map((item) => item.name);
+  const surfaceNames = surfaces.value.map((item) => item.name);
+
+  if (surfaceNames.includes(localStorage.surface)) {
+    selectedSurfaceColor.value = localStorage.surface;
+  }
+
+  if (
+    primaryColorNames.includes(localStorage.primaryColor) &&
+    presets.value.includes(localStorage.presetName)
+  ) {
+    const storedColor = primaryColors.value.find(
+      (color) => color.name === localStorage.primaryColor,
+    );
+
+    updateColors("primary", storedColor);
+    theme.value = localStorage.presetName;
+  }
+
+  if (localStorage.ripple) {
+    ripple.value = localStorage.ripple === "on";
+  }
 });
 </script>
 <template>
