@@ -42,8 +42,8 @@ const countries = ref([
 
 <template>
   <Head title="Welcome" />
-  <header class="mx-auto py-10 max-w-7xl">
-    <nav class="flex flex-1 justify-end items-center space-x-2">
+  <header class="mx-auto max-w-7xl py-10">
+    <nav class="flex flex-1 items-center justify-end space-x-2">
       <ThemeSwitcher />
       <ColorSchemeSwitcher />
       <template v-if="canLogin">
@@ -73,8 +73,8 @@ const countries = ref([
     </nav>
   </header>
 
-  <main class="mt-6 mx-auto max-w-7xl">
-    <div class="card flex space-x-2 justify-center">
+  <main class="mx-auto mt-6 max-w-7xl">
+    <div class="card flex justify-center space-x-2">
       <Button label="Primary" />
       <FloatLabel>
         <InputText id="username" />
@@ -107,10 +107,10 @@ const countries = ref([
           <i class="pi pi-map-marker" />
         </template>
         <template #header>
-          <div class="font-medium px-3 py-2">Available Countries</div>
+          <div class="px-3 py-2 font-medium">Available Countries</div>
         </template>
         <template #footer>
-          <div class="p-3 flex justify-between">
+          <div class="flex justify-between p-3">
             <Button
               label="Add New"
               severity="secondary"

@@ -581,14 +581,14 @@ onMounted(() => {
     @click="toggle"
   />
   <Popover ref="settingsMenu">
-    <div class="w-[19rem] flex flex-col gap-2">
-      <span class="font-medium block text-sm">Primary colors</span>
+    <div class="flex w-[19rem] flex-col gap-2">
+      <span class="block text-sm font-medium">Primary colors</span>
       <div
-        class="self-stretch justify-start items-start gap-2 inline-flex flex-wrap"
+        class="inline-flex flex-wrap items-start justify-start gap-2 self-stretch"
       >
         <button
           type="button"
-          class="outline outline-2 outline-offset-1 outline-transparent cursor-pointer p-0 rounded-[50%] w-5 h-5"
+          class="h-5 w-5 cursor-pointer rounded-[50%] p-0 outline outline-2 outline-offset-1 outline-transparent"
           v-for="primaryColor in primaryColors"
           :key="primaryColor.name"
           :title="primaryColor.name"
@@ -600,13 +600,13 @@ onMounted(() => {
         />
       </div>
 
-      <span class="font-medium block text-sm">Surface colors</span>
+      <span class="block text-sm font-medium">Surface colors</span>
       <div
-        class="self-stretch justify-start items-start gap-2 inline-flex flex-wrap"
+        class="inline-flex flex-wrap items-start justify-start gap-2 self-stretch"
       >
         <button
           type="button"
-          class="outline outline-2 outline-offset-1 outline-transparent cursor-pointer p-0 rounded-[50%] w-5 h-5"
+          class="h-5 w-5 cursor-pointer rounded-[50%] p-0 outline outline-2 outline-offset-1 outline-transparent"
           v-for="surface in surfaces"
           :key="surface.name"
           :title="surface.name"
@@ -618,9 +618,9 @@ onMounted(() => {
         />
       </div>
 
-      <span class="font-medium block text-sm">Preset</span>
+      <span class="block text-sm font-medium">Preset</span>
       <div
-        class="inline-flex p-[0.28rem] items-start gap-[0.28rem] rounded-[0.71rem] border border-[#00000003] w-full"
+        class="inline-flex w-full items-start gap-[0.28rem] rounded-[0.71rem] border border-[#00000003] p-[0.28rem]"
       >
         <SelectButton
           v-model="theme"
@@ -630,7 +630,7 @@ onMounted(() => {
         />
       </div>
 
-      <span class="font-medium block text-sm">Ripple Effect</span>
+      <span class="block text-sm font-medium">Ripple Effect</span>
       <ToggleSwitch v-model="ripple" />
     </div>
   </Popover>
