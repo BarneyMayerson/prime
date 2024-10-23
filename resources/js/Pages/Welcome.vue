@@ -5,16 +5,8 @@ import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import MultiSelect from "primevue/multiselect";
 import Button from "primevue/button";
-import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
-import ColorSchemeSwitcher from "@/Components/ColorSchemeSwitcher.vue";
 
 defineProps({
-  canLogin: {
-    type: Boolean,
-  },
-  canRegister: {
-    type: Boolean,
-  },
   laravelVersion: {
     type: String,
     required: true,
@@ -42,38 +34,7 @@ const countries = ref([
 
 <template>
   <Head title="Welcome" />
-  <header class="mx-auto max-w-7xl py-10">
-    <nav class="flex flex-1 items-center justify-end space-x-2">
-      <ThemeSwitcher />
-      <ColorSchemeSwitcher />
-      <template v-if="canLogin">
-        <Link
-          v-if="$page.props.auth.user"
-          tabindex="-1"
-          :href="route('dashboard')"
-        >
-          <Button label="Dashboard" link />
-        </Link>
-
-        <template v-else>
-          <Link :href="route('login')" tabindex="-1">
-            <Button label="Login" link />
-          </Link>
-
-          <Link
-            v-if="canRegister"
-            tabindex="-1"
-            :href="route('register')"
-            class="outline-none"
-          >
-            <Button label="Register" link />
-          </Link>
-        </template>
-      </template>
-    </nav>
-  </header>
-
-  <main class="mx-auto mt-6 max-w-7xl">
+  <div class="mx-auto mt-6 max-w-7xl">
     <div class="card flex justify-center space-x-2">
       <Button label="Primary" />
       <FloatLabel>
@@ -129,7 +90,7 @@ const countries = ref([
         </template>
       </MultiSelect>
     </div>
-  </main>
+  </div>
 
   <footer class="py-16 text-center text-sm">
     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
