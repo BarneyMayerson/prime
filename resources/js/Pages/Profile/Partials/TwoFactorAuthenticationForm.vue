@@ -137,7 +137,7 @@ const disableTwoFactorAuthentication = () => {
 
       <div v-if="twoFactorEnabled">
         <div v-if="qrCode">
-          <div class="mt-4 max-w-xl text-sm text-gray-600">
+          <div class="mt-4 max-w-xl text-sm">
             <p v-if="confirming" class="font-semibold">
               To finish enabling two factor authentication, scan the following
               QR code using your phone's authenticator application or enter the
@@ -153,7 +153,7 @@ const disableTwoFactorAuthentication = () => {
 
           <div class="mt-4 inline-block bg-white p-2" v-html="qrCode" />
 
-          <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-gray-600">
+          <div v-if="setupKey" class="mt-4 max-w-xl text-sm">
             <p class="font-semibold">
               Setup Key: <span v-html="setupKey"></span>
             </p>

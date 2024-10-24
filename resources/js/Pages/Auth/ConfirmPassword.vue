@@ -57,6 +57,7 @@ const submit = () => {
       <div class="mt-4 flex justify-end">
         <Button
           class="ms-4"
+          type="submit"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >
