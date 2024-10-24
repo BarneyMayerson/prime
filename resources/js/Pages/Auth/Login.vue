@@ -73,7 +73,7 @@ const submit = () => {
 
       <div class="mt-4 block">
         <label class="flex items-center">
-          <Checkbox v-model="form.remember" name="remember" />
+          <Checkbox v-model="form.remember" :binary="true" name="remember" />
           <span class="ms-2 text-sm">Remember me</span>
         </label>
       </div>

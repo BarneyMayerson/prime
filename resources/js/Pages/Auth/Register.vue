@@ -90,7 +90,13 @@ const submit = () => {
       >
         <InputLabel for="terms">
           <div class="flex items-center">
-            <Checkbox id="terms" v-model="form.terms" name="terms" required />
+            <Checkbox
+              id="terms"
+              v-model="form.terms"
+              :binary="true"
+              name="terms"
+              required
+            />
 
             <div class="ms-2">
               I agree to the

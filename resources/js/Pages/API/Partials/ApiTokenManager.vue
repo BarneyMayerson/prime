@@ -222,10 +222,10 @@ const deleteApiToken = () => {
           <div v-for="permission in availablePermissions" :key="permission">
             <label class="flex items-center">
               <Checkbox
-                v-model:checked="updateApiTokenForm.permissions"
+                v-model="updateApiTokenForm.permissions"
                 :value="permission"
               />
-              <span class="ms-2 text-sm text-gray-600">{{ permission }}</span>
+              <span class="ms-2 text-sm">{{ permission }}</span>
             </label>
           </div>
         </div>
