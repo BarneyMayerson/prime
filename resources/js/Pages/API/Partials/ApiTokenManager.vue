@@ -124,6 +124,7 @@ const deleteApiToken = () => {
         </ActionMessage>
 
         <Button
+          type="submit"
           :class="{ 'opacity-25': createApiTokenForm.processing }"
           :disabled="createApiTokenForm.processing"
         >

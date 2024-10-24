@@ -219,31 +219,34 @@ const disableTwoFactorAuthentication = () => {
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="regenerateRecoveryCodes">
-            <SecondaryButton
+            <Button
               v-if="recoveryCodes.length > 0 && !confirming"
+              severity="secondary"
               class="me-3"
             >
               Regenerate Recovery Codes
-            </SecondaryButton>
+            </Button>
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="showRecoveryCodes">
-            <SecondaryButton
+            <Button
               v-if="recoveryCodes.length === 0 && !confirming"
+              severity="secondary"
               class="me-3"
             >
               Show Recovery Codes
-            </SecondaryButton>
+            </Button>
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
-            <SecondaryButton
+            <Button
               v-if="confirming"
+              severity="secondary"
               :class="{ 'opacity-25': disabling }"
               :disabled="disabling"
             >
               Cancel
-            </SecondaryButton>
+            </Button>
           </ConfirmsPassword>
 
           <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">

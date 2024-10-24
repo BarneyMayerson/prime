@@ -200,6 +200,7 @@ const clearPhotoFileInput = () => {
       <Button
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
+        type="submit"
       >
         Save
       </Button>
