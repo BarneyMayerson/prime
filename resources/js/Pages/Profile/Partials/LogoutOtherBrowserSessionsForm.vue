@@ -3,9 +3,9 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
-import DialogModal from "@/Components/DialogModal.vue";
 import InputError from "@/Components/InputError.vue";
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 
 defineProps({
@@ -129,33 +129,36 @@ const closeModal = () => {
       </div>
 
       <!-- Log Out Other Devices Confirmation Modal -->
-      <DialogModal :show="confirmingLogout" @close="closeModal">
-        <template #title> Log Out Other Browser Sessions </template>
-
-        <template #content>
+      <Dialog
+        v-model:visible="confirmingLogout"
+        modal
+        dismissableMask
+        header="Log Out Other Browser Sessions"
+        :style="{ width: '28rem' }"
+        @close="closeModal"
+      >
+        <span class="text-surface-500 dark:text-surface-400 mb-8 block">
           Please enter your password to confirm you would like to log out of
           your other browser sessions across all of your devices.
+        </span>
+        <div class="mt-4">
+          <InputText
+            ref="passwordInput"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-full"
+            placeholder="Password"
+            autocomplete="current-password"
+            @keyup.enter="logoutOtherBrowserSessions"
+          />
 
-          <div class="mt-4">
-            <InputText
-              ref="passwordInput"
-              v-model="form.password"
-              type="password"
-              class="mt-1 block w-3/4"
-              placeholder="Password"
-              autocomplete="current-password"
-              @keyup.enter="logoutOtherBrowserSessions"
-            />
-
-            <InputError :message="form.errors.password" class="mt-2" />
-          </div>
-        </template>
+          <InputError :message="form.errors.password" class="mt-2" />
+        </div>
 
         <template #footer>
           <Button severity="secondary" @click="closeModal">Cancel</Button>
 
           <Button
-            class="ms-3"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
             @click="logoutOtherBrowserSessions"
@@ -163,7 +166,7 @@ const closeModal = () => {
             Log Out Other Browser Sessions
           </Button>
         </template>
-      </DialogModal>
+      </Dialog>
     </template>
   </ActionSection>
 </template>

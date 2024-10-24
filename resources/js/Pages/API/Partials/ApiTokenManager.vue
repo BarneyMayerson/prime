@@ -4,13 +4,13 @@ import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
-import DialogModal from "@/Components/DialogModal.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
+import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 
 const props = defineProps({
@@ -165,7 +165,7 @@ const deleteApiToken = () => {
 
                   <button
                     v-if="availablePermissions.length > 0"
-                    class="ms-6 cursor-pointer text-sm text-gray-400 underline"
+                    class="ms-6 cursor-pointer text-sm underline"
                     @click="manageApiTokenPermissions(token)"
                   >
                     Permissions
@@ -186,50 +186,55 @@ const deleteApiToken = () => {
     </div>
 
     <!-- Token Value Modal -->
-    <DialogModal :show="displayingToken" @close="displayingToken = false">
-      <template #title> API Token </template>
+    <Dialog
+      v-model:visible="displayingToken"
+      modal
+      header="API Token"
+      :style="{ width: '32rem' }"
+      @close="displayingToken = false"
+    >
+      <div>
+        Please copy your new API token. For your security, it won't be shown
+        again.
+      </div>
 
-      <template #content>
-        <div>
-          Please copy your new API token. For your security, it won't be shown
-          again.
-        </div>
-
-        <div
-          v-if="$page.props.jetstream.flash.token"
-          class="mt-4 break-all rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500"
-        >
-          {{ $page.props.jetstream.flash.token }}
-        </div>
-      </template>
+      <div
+        v-if="$page.props.jetstream.flash.token"
+        class="mt-4 break-all rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500"
+      >
+        {{ $page.props.jetstream.flash.token }}
+      </div>
 
       <template #footer>
         <Button severity="secondary" @click="displayingToken = false">
           Close
         </Button>
       </template>
-    </DialogModal>
+    </Dialog>
 
     <!-- API Token Permissions Modal -->
-    <DialogModal
-      :show="managingPermissionsFor != null"
+    <Dialog
+      v-model:visible="managingPermissionsFor"
+      modal
+      header="API Token Permissions"
+      :style="{ width: '26rem' }"
       @close="managingPermissionsFor = null"
     >
-      <template #title> API Token Permissions </template>
-
-      <template #content>
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div v-for="permission in availablePermissions" :key="permission">
-            <label class="flex items-center">
-              <Checkbox
-                v-model="updateApiTokenForm.permissions"
-                :value="permission"
-              />
-              <span class="ms-2 text-sm">{{ permission }}</span>
-            </label>
-          </div>
+      <p class="mb-8 block">
+        Token name:
+        <span class="font-bold">{{ managingPermissionsFor.name }}</span>
+      </p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div v-for="permission in availablePermissions" :key="permission">
+          <label class="flex items-center">
+            <Checkbox
+              v-model="updateApiTokenForm.permissions"
+              :value="permission"
+            />
+            <span class="ms-2 text-sm">{{ permission }}</span>
+          </label>
         </div>
-      </template>
+      </div>
 
       <template #footer>
         <Button severity="secondary" @click="managingPermissionsFor = null">
@@ -237,7 +242,6 @@ const deleteApiToken = () => {
         </Button>
 
         <Button
-          class="ms-3"
           :class="{ 'opacity-25': updateApiTokenForm.processing }"
           :disabled="updateApiTokenForm.processing"
           @click="updateApiToken"
@@ -245,7 +249,7 @@ const deleteApiToken = () => {
           Save
         </Button>
       </template>
-    </DialogModal>
+    </Dialog>
 
     <!-- Delete Token Confirmation Modal -->
     <ConfirmationModal

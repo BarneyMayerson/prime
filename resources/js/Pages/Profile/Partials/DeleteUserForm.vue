@@ -2,9 +2,9 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
-import DialogModal from "@/Components/DialogModal.vue";
 import InputError from "@/Components/InputError.vue";
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 
 const confirmingUserDeletion = ref(false);
@@ -56,36 +56,40 @@ const closeModal = () => {
       </div>
 
       <!-- Delete Account Confirmation Modal -->
-      <DialogModal :show="confirmingUserDeletion" @close="closeModal">
-        <template #title>Delete Account</template>
-
-        <template #content>
+      <Dialog
+        v-model:visible="confirmingUserDeletion"
+        modal
+        dismissableMask
+        header="Delete Account"
+        :style="{ width: '28rem' }"
+        @close="closeModal"
+      >
+        <span class="text-surface-500 dark:text-surface-400 mb-8 block">
           Are you sure you want to delete your account? Once your account is
           deleted, all of its resources and data will be permanently deleted.
           Please enter your password to confirm you would like to permanently
           delete your account.
+        </span>
 
-          <div class="mt-4">
-            <InputText
-              ref="passwordInput"
-              v-model="form.password"
-              type="password"
-              class="mt-1 block w-3/4"
-              placeholder="Password"
-              autocomplete="current-password"
-              @keyup.enter="deleteUser"
-            />
+        <div class="mt-4">
+          <InputText
+            ref="passwordInput"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-full"
+            placeholder="Password"
+            autocomplete="current-password"
+            @keyup.enter="deleteUser"
+          />
 
-            <InputError :message="form.errors.password" class="mt-2" />
-          </div>
-        </template>
+          <InputError :message="form.errors.password" class="mt-2" />
+        </div>
 
         <template #footer>
           <Button severity="secondary" @click="closeModal">Cancel</Button>
 
           <Button
             severity="danger"
-            class="ms-3"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
             @click="deleteUser"
@@ -93,7 +97,7 @@ const closeModal = () => {
             Delete Account
           </Button>
         </template>
-      </DialogModal>
+      </Dialog>
     </template>
   </ActionSection>
 </template>

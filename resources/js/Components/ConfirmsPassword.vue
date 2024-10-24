@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, nextTick } from "vue";
-import DialogModal from "./DialogModal.vue";
 import InputError from "./InputError.vue";
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 
 const emit = defineEmits(["confirmed"]);
@@ -77,12 +77,14 @@ const closeModal = () => {
       <slot />
     </span>
 
-    <DialogModal :show="confirmingPassword" @close="closeModal">
-      <template #title>
-        {{ title }}
-      </template>
-
-      <template #content>
+    <Dialog
+      v-model:visible="confirmingPassword"
+      modal
+      :header="title"
+      :style="{ width: '28rem' }"
+      @close="closeModal"
+    >
+      <div>
         {{ content }}
 
         <div class="mt-4">
@@ -90,7 +92,7 @@ const closeModal = () => {
             ref="passwordInput"
             v-model="form.password"
             type="password"
-            class="mt-1 block w-3/4"
+            class="mt-1 block w-full"
             placeholder="Password"
             autocomplete="current-password"
             @keyup.enter="confirmPassword"
@@ -98,13 +100,12 @@ const closeModal = () => {
 
           <InputError :message="form.error" class="mt-2" />
         </div>
-      </template>
+      </div>
 
       <template #footer>
         <Button severity="secondary" @click="closeModal">Cancel</Button>
 
         <Button
-          class="ms-3"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
           @click="confirmPassword"
@@ -112,6 +113,6 @@ const closeModal = () => {
           {{ button }}
         </Button>
       </template>
-    </DialogModal>
+    </Dialog>
   </span>
 </template>
