@@ -6,6 +6,8 @@ import "primeicons/primeicons.css";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
+import ConfirmationService from "primevue/confirmationservice";
+import ToastService from "primevue/toastservice";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
@@ -33,6 +35,8 @@ createInertiaApp({
           },
         },
       })
+      .use(ConfirmationService)
+      .use(ToastService)
       .use(plugin)
       .use(ZiggyVue)
       .mount(el);

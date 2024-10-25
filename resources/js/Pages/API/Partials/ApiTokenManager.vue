@@ -3,15 +3,21 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
-import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
+import ConfirmDialog from "primevue/confirmdialog";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
+import Toast from "primevue/toast";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
+
+const confirm = useConfirm();
+const toast = useToast();
 
 const props = defineProps({
   tokens: Array,
@@ -65,14 +71,46 @@ const confirmApiTokenDeletion = (token) => {
 };
 
 const deleteApiToken = () => {
+  console.log("here: ", apiTokenBeingDeleted.value);
   deleteApiTokenForm.delete(
     route("api-tokens.destroy", apiTokenBeingDeleted.value),
     {
       preserveScroll: true,
       preserveState: true,
-      onSuccess: () => (apiTokenBeingDeleted.value = null),
+      onSuccess: () => {
+        apiTokenBeingDeleted.value = null;
+        toast.add({
+          severity: "success",
+          summary: "Success",
+          detail: "API Token has been deleted.",
+          life: 4000,
+        });
+      },
     },
   );
+};
+
+const confirmDeleteApiToken = (token) => {
+  confirm.require({
+    header: "Delete API Token",
+    message: "Are you sure you would like to delete this API token?",
+    icon: "pi pi-exclamation-triangle",
+    position: "top",
+    rejectProps: {
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: {
+      label: "Delete",
+      severity: "danger",
+    },
+    accept: () => {
+      apiTokenBeingDeleted.value = token;
+
+      deleteApiToken();
+    },
+  });
 };
 </script>
 
@@ -173,7 +211,7 @@ const deleteApiToken = () => {
 
                   <button
                     class="ms-6 cursor-pointer text-sm text-red-500"
-                    @click="confirmApiTokenDeletion(token)"
+                    @click="confirmDeleteApiToken(token)"
                   >
                     Delete
                   </button>
@@ -251,32 +289,9 @@ const deleteApiToken = () => {
       </template>
     </Dialog>
 
-    <!-- Delete Token Confirmation Modal -->
-    <ConfirmationModal
-      :show="apiTokenBeingDeleted != null"
-      @close="apiTokenBeingDeleted = null"
-    >
-      <template #title> Delete API Token </template>
+    <!-- Delete Token Confirm Dialog -->
+    <ConfirmDialog />
 
-      <template #content>
-        Are you sure you would like to delete this API token?
-      </template>
-
-      <template #footer>
-        <Button severity="secondary" @click="apiTokenBeingDeleted = null">
-          Cancel
-        </Button>
-
-        <Button
-          severity="danger"
-          class="ms-3"
-          :class="{ 'opacity-25': deleteApiTokenForm.processing }"
-          :disabled="deleteApiTokenForm.processing"
-          @click="deleteApiToken"
-        >
-          Delete
-        </Button>
-      </template>
-    </ConfirmationModal>
+    <Toast position="bottom-right" />
   </div>
 </template>
