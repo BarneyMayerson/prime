@@ -13,10 +13,15 @@ const logout = () => {
   router.post(route("logout"));
 };
 
-const items = ref([
+const mainMenuItems = ref([
   {
     label: "Home",
     icon: "pi pi-home",
+    url: route("home"),
+  },
+  {
+    label: "Dashboard",
+    url: route("dashboard"),
   },
   {
     label: "Projects",
@@ -63,15 +68,11 @@ onMounted(() => {
         items: [
           {
             label: "Profile",
-            command: () => {
-              router.get(route("profile.show"));
-            },
+            url: route("profile.show"),
           },
           {
             label: "API Tokens",
-            command: () => {
-              router.get(route("api-tokens.index"));
-            },
+            url: route("api-tokens.index"),
           },
           {
             separator: true,
@@ -92,9 +93,7 @@ onMounted(() => {
         items: [
           {
             label: "Profile",
-            command: () => {
-              router.get(route("profile.show"));
-            },
+            url: route("profile.show"),
           },
           {
             separator: true,
@@ -113,7 +112,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Menubar :model="items">
+  <Menubar :model="mainMenuItems">
     <template #start>
       <Link :href="route('home')">
         <ApplicationMark class="block h-9 w-auto" />
@@ -121,7 +120,8 @@ onMounted(() => {
     </template>
     <template #item="{ item, props, hasSubmenu, root }">
       <a class="flex items-center" v-bind="props.action">
-        <span>{{ item.label }}</span>
+        <Link v-if="item.url" :href="item.url">{{ item.label }}</Link>
+        <span v-else>{{ item.label }}</span>
         <Badge
           v-if="item.badge"
           :class="{ 'ml-auto': !root, 'ml-2': root }"
@@ -189,7 +189,14 @@ onMounted(() => {
               id="overlay_user_menu"
               :model="userMenuItems"
               :popup="true"
-            />
+            >
+              <template #item="{ item }">
+                <div class="p-menu-item-link">
+                  <Link v-if="item.url" :href="item.url">{{ item.label }}</Link>
+                  <span v-else>{{ item.label }}</span>
+                </div>
+              </template>
+            </Menu>
           </div>
           <div v-else>
             <Link :href="route('login')" tabindex="-1">

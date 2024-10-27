@@ -7,7 +7,7 @@ import PrimeMenu from "@/Components/Navs/PrimeMenu.vue";
 <template>
   <div>
     <Banner />
-    <PrimaryMenu />
+    <!-- <PrimaryMenu /> -->
     <PrimeMenu />
 
     <div class="min-h-screen">
