@@ -1,6 +1,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
+import primeVue from "tailwindcss-primeui/src/index";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,6 +13,8 @@ export default {
     "./resources/js/**/*.vue",
   ],
 
+  darkMode: "selector",
+
   theme: {
     extend: {
       fontFamily: {
@@ -20,5 +23,5 @@ export default {
     },
   },
 
-  plugins: [forms, typography],
+  plugins: [forms, typography, primeVue],
 };

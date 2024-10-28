@@ -13,14 +13,14 @@ const toggleDarkMode = () => {
 };
 
 const applyDark = (el) => {
-  el.classList.add("p-dark");
+  el.classList.add("dark");
   iconClass.value = "pi-sun";
   theme.value = "dark";
   localStorage.theme = "dark";
 };
 
 const applyLight = (el) => {
-  el.classList.remove("p-dark");
+  el.classList.remove("dark");
   iconClass.value = "pi-moon";
   theme.value = "light";
   localStorage.theme = "light";

@@ -90,6 +90,19 @@ const countries = ref([
         </template>
       </MultiSelect>
     </div>
+
+    <div class="mt-12 flex flex-col gap-8">
+      <div
+        class="bg-primary text-primary-contrast border-primary-600 border-4 p-4"
+      >
+        Content
+      </div>
+      <div
+        class="bg-surface-100 dark:bg-surface-900 text-surface-900 dark:text-surface-0 border-surface-200 dark:border-surface-700 hover:text-surface-700 dark:hover:text-surface-200 p-4"
+      >
+        Content
+      </div>
+    </div>
   </div>
 
   <footer class="py-16 text-center text-sm">
