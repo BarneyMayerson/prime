@@ -105,6 +105,7 @@ const countries = ref([
       <div class="hover:bg-emphasis hover:text-color-emphasis p-4">Content</div>
       <div class="p-4">
         <div class="overflow-hidden py-8">
+          <p class="text-primary">Animation</p>
           <div
             :class="`rounded-border bg-primary animate-fadeinleft animate-infinite animate-duration-3000 mx-auto h-16 w-16`"
           ></div>
