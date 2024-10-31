@@ -5,6 +5,7 @@ import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import MultiSelect from "primevue/multiselect";
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 
 defineProps({
   laravelVersion: {
@@ -30,6 +31,8 @@ const countries = ref([
   { name: "Spain", code: "ES" },
   { name: "United States", code: "US" },
 ]);
+
+const visibleDialog = ref(false);
 </script>
 
 <template>
@@ -93,24 +96,55 @@ const countries = ref([
 
     <div class="mt-12 flex flex-col gap-8">
       <div
-        class="bg-primary text-primary-contrast border-primary-600 border-4 p-4"
+        class="border-4 border-primary-600 bg-primary p-4 text-primary-contrast"
       >
         Content
       </div>
       <div
-        class="bg-surface-100 dark:bg-surface-900 text-surface-900 dark:text-surface-0 border-surface-200 dark:border-surface-700 hover:text-surface-700 dark:hover:text-surface-200 p-4"
+        class="border-surface-200 bg-surface-100 p-4 text-surface-900 hover:text-surface-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-0 dark:hover:text-surface-200"
       >
         Content
       </div>
-      <div class="hover:bg-emphasis hover:text-color-emphasis p-4">Content</div>
+      <div class="p-4 hover:bg-emphasis hover:text-color-emphasis">Content</div>
       <div class="p-4">
         <div class="overflow-hidden py-8">
           <p class="text-primary">Animation</p>
           <div
-            :class="`rounded-border bg-primary animate-fadeinleft animate-infinite animate-duration-3000 mx-auto h-16 w-16`"
+            :class="`mx-auto h-16 w-16 animate-fadeinleft bg-primary animate-duration-3000 animate-infinite rounded-border`"
           ></div>
         </div>
       </div>
+    </div>
+
+    <div class="card flex justify-center">
+      <Button label="Show Dialog" @click="visibleDialog = true" />
+      <Dialog
+        v-model:visible="visibleDialog"
+        modal
+        header="Edit Profile"
+        :style="{ width: '25rem' }"
+      >
+        <span class="mb-8 block text-surface-500 dark:text-surface-400">
+          Update your information.
+        </span>
+        <div class="mb-4 flex items-center gap-4">
+          <label for="username" class="w-24 font-semibold">Username</label>
+          <InputText id="username" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="mb-8 flex items-center gap-4">
+          <label for="email" class="w-24 font-semibold">Email</label>
+          <InputText id="email" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex justify-end gap-2">
+          <Button
+            type="button"
+            label="Cancel"
+            severity="secondary"
+            @click="visibleDialog = false"
+          />
+          <Button type="button" label="Save" @click="visibleDialog = false" />
+        </div>
+      </Dialog>
     </div>
   </div>
 

@@ -1,13 +1,13 @@
 <script setup>
+import { Modal } from "momentum-modal";
+import Toast from "primevue/toast";
 import Banner from "@/Components/Banner.vue";
-import PrimaryMenu from "@/Components/Navs/PrimaryMenu.vue";
 import PrimeMenu from "@/Components/Navs/PrimeMenu.vue";
 </script>
 
 <template>
   <div>
     <Banner />
-    <!-- <PrimaryMenu /> -->
     <PrimeMenu />
 
     <div class="min-h-screen">
@@ -16,4 +16,7 @@ import PrimeMenu from "@/Components/Navs/PrimeMenu.vue";
       </main>
     </div>
   </div>
+
+  <Modal />
+  <Toast position="bottom-right" />
 </template>

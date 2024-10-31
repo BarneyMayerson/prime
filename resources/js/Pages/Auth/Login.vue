@@ -1,12 +1,14 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import { useModal } from "momentum-modal";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
+import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
+import { useToast } from "primevue/usetoast";
 
 defineProps({
   canResetPassword: Boolean,
@@ -27,23 +29,43 @@ const submit = () => {
     }))
     .post(route("login"), {
       onFinish: () => form.reset("password"),
+      onSuccess: () =>
+        toast.add({
+          severity: "success",
+          summary: "Welcome back!",
+          detail: "You have been logged in.",
+          life: 3000,
+        }),
     });
 };
+
+const { show, redirect } = useModal();
+const toast = useToast();
 </script>
 
 <template>
-  <Head title="Log in" />
+  <Head title="Log In" />
 
-  <AuthenticationCard>
-    <template #logo>
-      <AuthenticationCardLogo />
-    </template>
+  <Dialog
+    v-model:visible="show"
+    modal
+    dismissableMask
+    header="Log In"
+    position="top"
+    class="w-[30rem]"
+    pt:mask:class="backdrop-blur-sm"
+    @after-hide="redirect"
+  >
+    <AuthenticationCardLogo class="flex justify-center" />
 
-    <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+    <div
+      v-if="status"
+      class="mb-4 text-sm font-medium text-green-600 dark:text-green-400"
+    >
       {{ status }}
     </div>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" class="mt-8">
       <div>
         <InputLabel for="email" value="Email" />
         <InputText
@@ -97,5 +119,5 @@ const submit = () => {
         </Button>
       </div>
     </form>
-  </AuthenticationCard>
+  </Dialog>
 </template>

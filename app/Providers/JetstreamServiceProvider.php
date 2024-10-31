@@ -32,20 +32,20 @@ class JetstreamServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
 
         Fortify::registerView(function () {
-            return Inertia::render('Auth/Register');
+            return Inertia::modal('Auth/Register')->baseRoute('home');
         });
 
         Fortify::loginView(function () {
-            return Inertia::render('Auth/Login', [
+            return Inertia::modal('Auth/Login', [
                 'canResetPassword' => true,
                 'status' => session('status'),
-            ]);
+            ])->baseRoute('home');
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return Inertia::render('Auth/ForgotPassword', [
+            return Inertia::modal('Auth/ForgotPassword', [
                 'status' => session('status'),
-            ]);
+            ])->baseRoute('login');
         });
 
         Fortify::resetPasswordView(function (Request $request) {

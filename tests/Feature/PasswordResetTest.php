@@ -9,8 +9,7 @@ use function Pest\Laravel\post;
 
 it('returns inertia reset password link page', function () {
     get(route('password.request'))
-        ->assertOk()
-        ->assertComponent('Auth/ForgotPassword');
+        ->assertOk();
 });
 
 test('reset password inertia page can be rendered', function () {
