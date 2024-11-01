@@ -72,6 +72,7 @@ const toast = useToast();
           required
           autofocus
           autocomplete="username"
+          :invalid="form.errors.email"
         />
         <InputError class="mt-2" :message="form.errors.email" />
       </div>

@@ -51,6 +51,7 @@ const { show, redirect } = useModal();
           required
           autofocus
           autocomplete="name"
+          :invalid="form.errors.name"
         />
         <InputError class="mt-2" :message="form.errors.name" />
       </div>
@@ -64,6 +65,7 @@ const { show, redirect } = useModal();
           class="mt-1 block w-full"
           required
           autocomplete="username"
+          :invalid="form.errors.email"
         />
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
@@ -77,6 +79,7 @@ const { show, redirect } = useModal();
           class="mt-1 block w-full"
           required
           autocomplete="new-password"
+          :invalid="form.errors.password"
         />
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
@@ -90,6 +93,7 @@ const { show, redirect } = useModal();
           class="mt-1 block w-full"
           required
           autocomplete="new-password"
+          :invalid="form.errors.password_confirmation"
         />
         <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>

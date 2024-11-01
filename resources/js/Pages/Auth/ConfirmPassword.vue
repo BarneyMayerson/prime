@@ -50,6 +50,7 @@ const submit = () => {
           required
           autocomplete="current-password"
           autofocus
+          :invalid="form.errors.password"
         />
         <InputError class="mt-2" :message="form.errors.password" />
       </div>

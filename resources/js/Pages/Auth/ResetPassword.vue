@@ -45,6 +45,7 @@ const submit = () => {
           required
           autofocus
           autocomplete="username"
+          :invalid="form.errors.email"
         />
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
@@ -58,6 +59,7 @@ const submit = () => {
           class="mt-1 block w-full"
           required
           autocomplete="new-password"
+          :invalid="form.errors.password"
         />
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
@@ -71,6 +73,7 @@ const submit = () => {
           class="mt-1 block w-full"
           required
           autocomplete="new-password"
+          :invalid="form.errors.password_confirmation"
         />
         <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>
