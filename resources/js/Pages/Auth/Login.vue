@@ -3,11 +3,11 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 import { useModal } from "momentum-modal";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
+import FloatLabel from "primevue/floatlabel";
 import { useToast } from "primevue/usetoast";
 
 defineProps({
@@ -65,37 +65,41 @@ const toast = useToast();
       {{ status }}
     </div>
 
-    <form @submit.prevent="submit" class="mt-8">
+    <form @submit.prevent="submit" class="mt-10">
       <div>
-        <InputLabel for="email" value="Email" />
-        <InputText
-          id="email"
-          v-model="form.email"
-          type="text"
-          class="mt-1 block w-full"
-          required
-          autofocus
-          autocomplete="username"
-          :invalid="form.errors.email"
-        />
+        <FloatLabel>
+          <InputText
+            id="email"
+            v-model="form.email"
+            type="email"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="username"
+            :invalid="form.errors.email"
+          />
+          <label for="email">Email</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
 
-      <div class="mt-4">
-        <InputLabel for="password" value="Password" />
-        <InputText
-          id="password"
-          v-model="form.password"
-          type="password"
-          class="mt-1 block w-full"
-          required
-          autocomplete="current-password"
-          :invalid="form.errors.password"
-        />
+      <div class="mt-10">
+        <FloatLabel>
+          <InputText
+            id="password"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-full"
+            required
+            autocomplete="current-password"
+            :invalid="form.errors.password"
+          />
+          <label for="password">Password</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
-      <div class="mt-4 block">
+      <div class="mt-8 block">
         <label class="flex items-center">
           <Checkbox v-model="form.remember" :binary="true" name="remember" />
           <span class="ms-2 text-sm">Remember me</span>
@@ -103,12 +107,8 @@ const toast = useToast();
       </div>
 
       <div class="mt-4 flex items-center justify-end">
-        <Link
-          v-if="canResetPassword"
-          :href="route('password.request')"
-          class="rounded-md text-sm"
-        >
-          Forgot your password?
+        <Link v-if="canResetPassword" :href="route('password.request')">
+          <Button label="Forgot your password?" link />
         </Link>
 
         <Button

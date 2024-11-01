@@ -3,9 +3,9 @@ import { Head, useForm } from "@inertiajs/vue3";
 import { useModal } from "momentum-modal";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import { useToast } from "primevue/usetoast";
 
@@ -48,7 +48,7 @@ const toast = useToast();
   >
     <AuthenticationCardLogo class="flex justify-center" />
 
-    <div class="mb-4 text-sm">
+    <div class="mb-4 mt-8 text-sm">
       Forgot your password? No problem. Just let us know your email address and
       we will email you a password reset link that will allow you to choose a
       new one.
@@ -63,17 +63,19 @@ const toast = useToast();
 
     <form @submit.prevent="submit" class="mt-8">
       <div>
-        <InputLabel for="email" value="Email" />
-        <InputText
-          id="email"
-          v-model="form.email"
-          type="email"
-          class="mt-1 block w-full"
-          required
-          autofocus
-          autocomplete="username"
-          :invalid="form.errors.email"
-        />
+        <FloatLabel>
+          <InputText
+            id="email"
+            v-model="form.email"
+            type="email"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="username"
+            :invalid="form.errors.email"
+          />
+          <label for="email">Email</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
 
