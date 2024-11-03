@@ -56,7 +56,9 @@ const toast = useToast();
     pt:mask:class="backdrop-blur-sm"
     @after-hide="redirect"
   >
-    <AuthenticationCardLogo class="flex justify-center" />
+    <div class="mt-2 flex justify-center">
+      <AuthenticationCardLogo />
+    </div>
 
     <div
       v-if="status"

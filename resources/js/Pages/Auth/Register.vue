@@ -40,7 +40,9 @@ const { show, redirect } = useModal();
     pt:mask:class="backdrop-blur-sm"
     @after-hide="redirect"
   >
-    <AuthenticationCardLogo class="flex justify-center" />
+    <div class="mt-2 flex justify-center">
+      <AuthenticationCardLogo />
+    </div>
 
     <form @submit.prevent="submit" class="mt-8">
       <div>

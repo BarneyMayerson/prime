@@ -46,7 +46,9 @@ const toast = useToast();
     pt:mask:class="backdrop-blur-sm"
     @after-hide="redirect"
   >
-    <AuthenticationCardLogo class="flex justify-center" />
+    <div class="mt-2 flex justify-center">
+      <AuthenticationCardLogo />
+    </div>
 
     <div class="mb-4 mt-8 text-sm">
       Forgot your password? No problem. Just let us know your email address and
