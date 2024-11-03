@@ -3,8 +3,8 @@ import { Head, useForm } from "@inertiajs/vue3";
 import AuthenticationCard from "@/Components/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 
 const props = defineProps({
@@ -35,46 +35,52 @@ const submit = () => {
     </template>
 
     <form @submit.prevent="submit">
-      <div>
-        <InputLabel for="email" value="Email" />
-        <InputText
-          id="email"
-          v-model="form.email"
-          type="email"
-          class="mt-1 block w-full"
-          required
-          autofocus
-          autocomplete="username"
-          :invalid="form.errors.email"
-        />
+      <div class="mt-6">
+        <FloatLabel>
+          <InputText
+            id="email"
+            v-model="form.email"
+            type="email"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="username"
+            :invalid="form.errors.email"
+          />
+          <label for="email">Email</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
 
-      <div class="mt-4">
-        <InputLabel for="password" value="Password" />
-        <InputText
-          id="password"
-          v-model="form.password"
-          type="password"
-          class="mt-1 block w-full"
-          required
-          autocomplete="new-password"
-          :invalid="form.errors.password"
-        />
+      <div class="mt-10">
+        <FloatLabel>
+          <InputText
+            id="password"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-full"
+            required
+            autocomplete="new-password"
+            :invalid="form.errors.password"
+          />
+          <label for="password">Password</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
-      <div class="mt-4">
-        <InputLabel for="password_confirmation" value="Confirm Password" />
-        <InputText
-          id="password_confirmation"
-          v-model="form.password_confirmation"
-          type="password"
-          class="mt-1 block w-full"
-          required
-          autocomplete="new-password"
-          :invalid="form.errors.password_confirmation"
-        />
+      <div class="mt-10">
+        <FloatLabel>
+          <InputText
+            id="password_confirmation"
+            v-model="form.password_confirmation"
+            type="password"
+            class="mt-1 block w-full"
+            required
+            autocomplete="new-password"
+            :invalid="form.errors.password_confirmation"
+          />
+          <label for="password_confirmation">Confirm Password</label>
+        </FloatLabel>
         <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>
 
