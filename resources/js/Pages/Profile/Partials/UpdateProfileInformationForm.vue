@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
-import ActionMessage from "@/Components/ActionMessage.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
+import { useToast } from "primevue/usetoast";
 
 const props = defineProps({
   user: Object,
@@ -19,7 +19,6 @@ const form = useForm({
   photo: null,
 });
 
-const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
 const photoInput = ref(null);
 
@@ -31,12 +30,24 @@ const updateProfileInformation = () => {
   form.post(route("user-profile-information.update"), {
     errorBag: "updateProfileInformation",
     preserveScroll: true,
-    onSuccess: () => clearPhotoFileInput(),
+    onSuccess: () => {
+      clearPhotoFileInput();
+      toast.add({
+        severity: "success",
+        summary: "Success!",
+        detail: "Saved!",
+        life: 3000,
+      });
+    },
   });
 };
 
 const sendEmailVerification = () => {
-  verificationLinkSent.value = true;
+  toast.add({
+    severity: "success",
+    summary: "Success!",
+    detail: "A new verification link has been sent to your email address.",
+  });
 };
 
 const selectNewPhoto = () => {
@@ -72,6 +83,8 @@ const clearPhotoFileInput = () => {
     photoInput.value.value = null;
   }
 };
+
+const toast = useToast();
 </script>
 
 <template>
@@ -97,7 +110,7 @@ const clearPhotoFileInput = () => {
           @change="updatePhotoPreview"
         />
 
-        <InputLabel for="photo" value="Photo" />
+        <label for="photo">Photo</label>
 
         <!-- Current Profile Photo -->
         <div v-show="!photoPreview" class="mt-2">
@@ -137,29 +150,33 @@ const clearPhotoFileInput = () => {
       </div>
 
       <!-- Name -->
-      <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" value="Name" />
-        <InputText
-          id="name"
-          v-model="form.name"
-          class="mt-1 block w-full"
-          required
-          autocomplete="name"
-        />
+      <div class="col-span-6 mt-6 sm:col-span-4">
+        <FloatLabel>
+          <InputText
+            id="name"
+            v-model="form.name"
+            class="mt-1 block w-full"
+            required
+            autocomplete="name"
+          />
+          <label for="name">Name</label>
+        </FloatLabel>
         <InputError :message="form.errors.name" class="mt-2" />
       </div>
 
       <!-- Email -->
-      <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="email" value="Email" />
-        <InputText
-          id="email"
-          v-model="form.email"
-          class="mt-1 block w-full"
-          type="email"
-          required
-          autocomplete="username"
-        />
+      <div class="col-span-6 mt-10 sm:col-span-4">
+        <FloatLabel>
+          <InputText
+            id="email"
+            v-model="form.email"
+            class="mt-1 block w-full"
+            type="email"
+            required
+            autocomplete="username"
+          />
+          <label for="email">Email</label>
+        </FloatLabel>
         <InputError :message="form.errors.email" class="mt-2" />
 
         <div
@@ -181,22 +198,11 @@ const clearPhotoFileInput = () => {
               Click here to re-send the verification email.
             </Link>
           </p>
-
-          <div
-            v-show="verificationLinkSent"
-            class="mt-2 text-sm font-medium text-green-600"
-          >
-            A new verification link has been sent to your email address.
-          </div>
         </div>
       </div>
     </template>
 
     <template #actions>
-      <ActionMessage :on="form.recentlySuccessful" class="me-3">
-        Saved.
-      </ActionMessage>
-
       <Button
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
