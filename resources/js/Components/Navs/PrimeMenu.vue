@@ -4,6 +4,7 @@ import { Link, router, usePage } from "@inertiajs/vue3";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
 import ColorSchemeSwitcher from "@/Components/ColorSchemeSwitcher.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
+import Avatar from "primevue/avatar";
 import Badge from "primevue/badge";
 import Button from "primevue/button";
 import Menu from "primevue/menu";
@@ -114,7 +115,7 @@ onMounted(() => {
 <template>
   <Menubar :model="mainMenuItems">
     <template #start>
-      <Link :href="route('home')">
+      <Link :href="route('home')" class="pl-4">
         <ApplicationMark class="block h-9 w-auto" />
       </Link>
     </template>
@@ -129,7 +130,7 @@ onMounted(() => {
         />
         <span
           v-if="item.shortcut"
-          class="border-surface bg-emphasis text-muted-color ml-auto rounded border p-1 text-xs"
+          class="ml-auto rounded border p-1 text-xs border-surface bg-emphasis text-muted-color"
           >{{ item.shortcut }}</span
         >
         <i
@@ -142,7 +143,7 @@ onMounted(() => {
       </a>
     </template>
     <template #end>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 pr-4">
         <ThemeSwitcher />
         <ColorSchemeSwitcher />
         <div class="flex items-center">
@@ -153,10 +154,11 @@ onMounted(() => {
               class="flex rounded-full"
               @click="toggle"
             >
-              <img
-                class="h-8 w-8 rounded-full object-cover"
-                :src="$page.props.auth.user.profile_photo_url"
-                :alt="$page.props.auth.user.name"
+              <Avatar
+                :image="$page.props.auth.user.profile_photo_url"
+                shape="circle"
+                size="large"
+                pt:image:class="object-cover"
               />
             </button>
 
