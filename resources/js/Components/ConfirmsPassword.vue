@@ -3,6 +3,7 @@ import { ref, reactive, nextTick } from "vue";
 import InputError from "./InputError.vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 
 const emit = defineEmits(["confirmed"]);
@@ -87,17 +88,19 @@ const closeModal = () => {
       <div>
         {{ content }}
 
-        <div class="mt-4">
-          <InputText
-            ref="passwordInput"
-            v-model="form.password"
-            type="password"
-            class="mt-1 block w-full"
-            placeholder="Password"
-            autocomplete="current-password"
-            @keyup.enter="confirmPassword"
-          />
-
+        <div class="mt-8">
+          <FloatLabel>
+            <InputText
+              ref="passwordInput"
+              v-model="form.password"
+              type="password"
+              class="mt-1 block w-full"
+              name="password"
+              autocomplete="current-password"
+              @keyup.enter="confirmPassword"
+            />
+            <label for="password">Password</label>
+          </FloatLabel>
           <InputError :message="form.error" class="mt-2" />
         </div>
       </div>

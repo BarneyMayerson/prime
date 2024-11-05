@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import InputError from "@/Components/InputError.vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
+import { useToast } from "primevue/usetoast";
 
 defineProps({
   sessions: Array,
@@ -28,7 +29,15 @@ const confirmLogout = () => {
 const logoutOtherBrowserSessions = () => {
   form.delete(route("other-browser-sessions.destroy"), {
     preserveScroll: true,
-    onSuccess: () => closeModal(),
+    onSuccess: () => {
+      toast.add({
+        severity: "success",
+        summary: "Success!",
+        detail: "Done!",
+        life: 3000,
+      });
+      closeModal();
+    },
     onError: () => passwordInput.value.focus(),
     onFinish: () => form.reset(),
   });
@@ -39,6 +48,8 @@ const closeModal = () => {
 
   form.reset();
 };
+
+const toast = useToast();
 </script>
 
 <template>
@@ -120,12 +131,8 @@ const closeModal = () => {
         </div>
       </div>
 
-      <div class="mt-5 flex items-center">
+      <div class="mt-5">
         <Button @click="confirmLogout">Log Out Other Browser Sessions</Button>
-
-        <ActionMessage :on="form.recentlySuccessful" class="ms-3">
-          Done.
-        </ActionMessage>
       </div>
 
       <!-- Log Out Other Devices Confirmation Modal -->
@@ -137,21 +144,23 @@ const closeModal = () => {
         :style="{ width: '28rem' }"
         @close="closeModal"
       >
-        <span class="text-surface-500 dark:text-surface-400 mb-8 block">
+        <span class="mb-8 block text-surface-500 dark:text-surface-400">
           Please enter your password to confirm you would like to log out of
           your other browser sessions across all of your devices.
         </span>
-        <div class="mt-4">
-          <InputText
-            ref="passwordInput"
-            v-model="form.password"
-            type="password"
-            class="mt-1 block w-full"
-            placeholder="Password"
-            autocomplete="current-password"
-            @keyup.enter="logoutOtherBrowserSessions"
-          />
-
+        <div class="mt-8">
+          <FloatLabel>
+            <InputText
+              ref="passwordInput"
+              v-model="form.password"
+              type="password"
+              class="mt-1 block w-full"
+              name="password"
+              autocomplete="current-password"
+              @keyup.enter="logoutOtherBrowserSessions"
+            />
+            <label for="password">Password</label>
+          </FloatLabel>
           <InputError :message="form.errors.password" class="mt-2" />
         </div>
 

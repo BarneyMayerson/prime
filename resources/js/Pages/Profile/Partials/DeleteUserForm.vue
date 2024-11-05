@@ -5,6 +5,7 @@ import ActionSection from "@/Components/ActionSection.vue";
 import InputError from "@/Components/InputError.vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 
 const confirmingUserDeletion = ref(false);
@@ -64,24 +65,26 @@ const closeModal = () => {
         :style="{ width: '28rem' }"
         @close="closeModal"
       >
-        <span class="text-surface-500 dark:text-surface-400 mb-8 block">
+        <span class="mb-8 block text-surface-500 dark:text-surface-400">
           Are you sure you want to delete your account? Once your account is
           deleted, all of its resources and data will be permanently deleted.
           Please enter your password to confirm you would like to permanently
           delete your account.
         </span>
 
-        <div class="mt-4">
-          <InputText
-            ref="passwordInput"
-            v-model="form.password"
-            type="password"
-            class="mt-1 block w-full"
-            placeholder="Password"
-            autocomplete="current-password"
-            @keyup.enter="deleteUser"
-          />
-
+        <div class="mt-8">
+          <FloatLabel>
+            <InputText
+              ref="passwordInput"
+              v-model="form.password"
+              type="password"
+              class="mt-1 block w-full"
+              name="password"
+              autocomplete="current-password"
+              @keyup.enter="deleteUser"
+            />
+            <label for="password">Password</label>
+          </FloatLabel>
           <InputError :message="form.errors.password" class="mt-2" />
         </div>
 

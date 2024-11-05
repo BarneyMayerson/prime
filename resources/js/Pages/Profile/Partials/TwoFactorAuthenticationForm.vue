@@ -6,6 +6,7 @@ import ConfirmsPassword from "@/Components/ConfirmsPassword.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import Button from "primevue/button";
+import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 
 const props = defineProps({
@@ -151,7 +152,7 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
-          <div class="mt-4 inline-block bg-white p-2" v-html="qrCode" />
+          <div class="mt-4 inline-block p-2" v-html="qrCode" />
 
           <div v-if="setupKey" class="mt-4 max-w-xl text-sm">
             <p class="font-semibold">
@@ -159,21 +160,21 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
-          <div v-if="confirming" class="mt-4">
-            <InputLabel for="code" value="Code" />
-
-            <InputText
-              id="code"
-              v-model="confirmationForm.code"
-              type="text"
-              name="code"
-              class="mt-1 block w-1/2"
-              inputmode="numeric"
-              autofocus
-              autocomplete="one-time-code"
-              @keyup.enter="confirmTwoFactorAuthentication"
-            />
-
+          <div v-if="confirming" class="mt-8">
+            <FloatLabel>
+              <InputText
+                id="code"
+                v-model="confirmationForm.code"
+                type="text"
+                name="code"
+                class="mt-1 block w-1/2"
+                inputmode="numeric"
+                autofocus
+                autocomplete="one-time-code"
+                @keyup.enter="confirmTwoFactorAuthentication"
+              />
+              <label for="code">Code</label>
+            </FloatLabel>
             <InputError :message="confirmationForm.errors.code" class="mt-2" />
           </div>
         </div>
@@ -188,7 +189,7 @@ const disableTwoFactorAuthentication = () => {
           </div>
 
           <div
-            class="mt-4 grid max-w-xl gap-1 rounded-lg bg-gray-100 px-4 py-4 font-mono text-sm"
+            class="mt-4 grid max-w-xl gap-1 rounded-lg px-4 py-4 font-mono text-sm"
           >
             <div v-for="code in recoveryCodes" :key="code">
               {{ code }}
