@@ -8,9 +8,9 @@ use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
 it('returns inertia reset password link page', function () {
-    get(route('password.request'))
-        ->assertOk();
-});
+get(route('password.request'))
+->assertOk();
+    });
 
 test('reset password inertia page can be rendered', function () {
     Notification::fake();
@@ -20,10 +20,10 @@ test('reset password inertia page can be rendered', function () {
     post(route('password.email', ['email' => $user->email]));
 
     Notification::assertSentTo($user, ResetPassword::class, function (object $notification) {
-        get(route('password.reset', ['token' => $notification->token]))
-            ->assertOk()
-            ->assertComponent('Auth/ResetPassword');
+    get(route('password.reset', ['token' => $notification->token]))
+    ->assertOk()
+    ->assertComponent('Auth/ResetPassword');
 
         return true;
-    });
+        });
 });
